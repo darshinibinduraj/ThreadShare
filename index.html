@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ThreadShare</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="icon" href="./images/logo.jpg">
+    <link rel="stylesheet" href="https://cdn.usebootstrap.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' media='screen' href='style/webcam-demo.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style/login.css'>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="./dist/webcam-easy.js"></script>
+</head>
+<body>
+
+	  <header>
+	    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+	      <img src="./images/logo.jpg" height="35px" width="35px"/><a class="navbar-brand" href="#">ThreadShare <span class="" style="font-size:16px; font-style: italic; border-radius: 5%;">- Share the Style, Shrink the Carbon</span></a>
+	      <button class="navbar-toggler" type="button" onclick="togglenav()" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	      </button>
+	      <div class="collapse navbar-collapse d-none" id="navbarCollapse">
+	        <ul class="navbar-nav mr-auto">
+	          <li class="nav-item active">
+	            <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link text-white" onclick="cities()">Cities</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link text-white" onclick="scoreboard()">Leaderboard</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link text-white" href="" tabindex="-1">About</a>
+	          </li>
+	        </ul>
+	        <form class="form-inline mt-2 mt-md-0">
+	          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+	          <button class="btn btn-secondary my-2 mr-2" type="Submit">Search</button>
+	          <button class="btn btn-secondary my-2 mr-2" type="button" id="btnLogin" onclick="logout()">Logout</button>
+	          <button class="btn btn-secondary my-2 mr-2" type="button" id="btnRegister" onclick="registerClick()">Register</button>
+	        </form>
+	      </div>
+	    </nav>
+		</header>
+
+	  <main id="webcam-app">
+	  	<div id="loginform" class="container h-100 mt-5">
+	  		<div class="d-flex justify-content-center h-100">
+	  			<div class="user_card">
+	  				<div class="d-flex justify-content-center">
+	  					<div class="brand_logo_container">
+	  						<img src="./images/logo.jpg" class="brand_logo" alt="Logo">
+	  					</div>
+	  				</div>
+	  				<div class="d-flex justify-content-center mt-5">
+	  					<form>
+	  						<div class="input-group mb-3">
+	  							<div class="input-group-append">
+	  								<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  							</div>
+	  							<input type="text" name="" class="form-control input_user" value="" placeholder="username">
+	  						</div>
+	  						<div class="input-group mb-2">
+	  							<div class="input-group-append">
+	  								<span class="input-group-text"><i class="fas fa-key"></i></span>
+	  							</div>
+	  							<input type="password" name="" class="form-control input_pass" value="" placeholder="password">
+	  						</div>
+	  						<div class="form-group">
+	  							<div class="custom-control custom-checkbox">
+	  								<input type="checkbox" class="custom-control-input" id="customControlInline">
+	  								<label class="custom-control-label" for="customControlInline">Remember me</label>
+	  							</div>
+	  						</div>
+	  						<div class="d-flex justify-content-center mt-3 login_container">
+	  							<button type="button" name="button" class="btn login_btn" onclick="cities()">Login</button>
+	  						</div>
+	  					</form>
+	  				</div>
+
+	  				<div class="mt-4">
+	  					<div class="d-flex justify-content-center links">
+	  						Don't have an account? <button id="register" onclick="loginClick()" class="ml-2 btn-link" role="link">Sign Up</button>
+	  					</div>
+	  					<div class="d-flex justify-content-center links">
+	  						<button class="btn-link">Forgot your password?</button>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  	</div>
+
+	  	<div id="registerform" class="container h-100 mt-5 d-none">
+	  		<div class="d-flex justify-content-center h-100">
+	  			<div class="user_register_card">
+	  				<div class="d-flex justify-content-center">
+	  					<div class="brand_logo_container">
+	  						<img src="./images/logo.jpg" class="brand_logo" alt="Logo">
+	  					</div>
+	  				</div>
+	  				<div class="d-flex form_container mt-5">
+	  					<div class="col-md-6">
+	  						<form>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  								</div>
+	  								<input type="text" name="" class="form-control input_user" value="" placeholder="Username">
+	  							</div>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-key"></i></span>
+	  								</div>
+	  								<input type="password" name="" class="form-control input_pass" value="" placeholder="Password">
+	  							</div>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  								</div>
+	  								<input type="text" name="" class="form-control input_user" value="" placeholder="Firstname">
+	  							</div>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  								</div>
+	  								<input type="text" name="" class="form-control input_user" value="" placeholder="Gender">
+	  							</div>
+	  							<div class="form-group">
+	  								<div class="custom-control custom-checkbox">
+	  									<input type="checkbox" class="custom-control-input" id="customControlInline">
+	  									<label class="custom-control-label" for="customControlInline">Do you recycle plastics, aluminum etc?</label>
+	  								</div>
+	  							</div>
+	  						</form>
+	  					</div>
+	  					<div class="col-md-6">
+	  						<form>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  								</div>
+	  								<input type="text" name="" class="form-control input_user" value="" placeholder="Date of Birth">
+	  							</div>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-key"></i></span>
+	  								</div>
+	  								<input type="password" name="" class="form-control input_pass" value="" placeholder="Confirm Password">
+	  							</div>
+	  							<div class="input-group mb-2">
+	  								<div class="input-group-append">
+	  									<span class="input-group-text"><i class="fas fa-user"></i></span>
+	  								</div>
+	  								<input type="text" name="" class="form-control input_user" value="" placeholder="Lastname">
+	  							</div>
+								  <div class="input-group mb-2">
+									<div class="input-group-append">
+										<span class="input-group-text"><i class="fas fa-user"></i></span>
+									</div>
+									<input type="text" name="" class="form-control input_user" value="" placeholder="Zip code">
+								</div>
+	  						</form>
+	  					</div>
+	  				</div>
+	  				<div class="d-flex justify-content-center login_container">
+	  					<button type="button" name="button" class="btn register_btn" onclick="registerDone()">Register</button>
+	  				</div>
+	  				<div class="">
+	  					<div class="d-flex justify-content-center links">
+	  						Do have an account? <button class="ml-2 btn-link" onclick="loginClick()" role="link">Sign In</button>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  	</div>
+
+	  	<!-- CO2 Score Board Start -->
+	  	<div id="scoreModal" class="mt-2 d-none">
+	  		<!-- Modal content -->
+	  		<div class="modal-content">
+	  			<span class="close text-right">&times;</span>
+	  			<div class="row">
+	  				<div class="container d-flex justify-content-center mt-1">
+	  					<div class="card p-3 mt-1">
+	  						<h5 class="mt-3 mb-3">Green AI Score Board</h5>
+
+	  						<div class="border p-2 rounded d-flex flex-row align-items-center">
+
+	  							<div class="p-1 px-4 d-flex flex-column align-items-center score rounded">
+	  								<span class="d-block char text-success">1000 lbs</span>
+	  								<span class="text-success">-220 lbs (Avg. diff)</span>
+	  							</div>
+	  							<div class="ml-2 p-3">
+	  								<h6 class="heading1">Darshini C Binduraj</h6>
+	  								<span>Excellent! keep working on your goals</span>
+	  							</div>
+	  						</div>
+
+	  						<div class="border p-2 rounded d-flex flex-row align-items-center mt-2">
+	  							<div class="p-1 px-4 d-flex flex-column align-items-center speed rounded">
+	  								<span class="d-block char text-warning">990 lbs</span>
+	  								<span class="text-warning">-230 lbs (Avg. diff)</span>
+	  							</div>
+	  							<div class="ml-2 p-4">
+	  								<h6 class="text">Sri Nalla</h6>
+	  								<span>Great job! you are almost there</span>
+	  							</div>
+	  						</div>
+
+	  						<div class="border p-2 rounded d-flex flex-row align-items-center mt-2">
+	  							<div class="p-1 px-4 d-flex flex-column align-items-center speed rounded">
+	  								<span class="d-block char text-primary">980 lbs</span>
+	  								<span class="text-primary">-240 lbs (Avg. diff)</span>
+	  							</div>
+	  							<div class="ml-2 p-4">
+	  								<h6 class="text">Raksha Suresh</h6>
+	  								<span>Wow! you have done it </span>
+	  							</div>
+	  						</div>
+
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<p class="ml-3">* Based on a yearly average of 1220 lbs CO2 reduction per household</p>
+	  	</div>
+
+	  	<!-- City Affliation -->
+	  	<div id="cities" class="row mb-2 d-none">
+	  		<div class="container mt-6">
+	  			<div class="row">
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Livermore</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/livermore.jpg" alt="Image 1">
+	  							</div>
+	  							<div class="stats">
+	  								<div>
+	  									<strong>MEMBERS</strong> 3098
+	  								</div>
+	  								<div>
+	  									<strong>SWAPPED</strong> 562
+	  								</div>
+	  								<div>
+	  									<strong>CO2 SAVED</strong> 1182 lbs
+	  								</div>
+	  							</div>
+	  							<div class="footer justify-content-center">
+	  								<a href="#" class="btn login_btn" onclick="livermoreschools()">SELECT</a>
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Pleasanton</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/pleasanton.png" alt="Image 1">
+	  							</div>
+								<div class="stats">
+									<div>
+										<strong>MEMBERS</strong> 998
+									</div>
+									<div>
+										<strong>SWAPPED</strong> 262
+									</div>
+									<div>
+										<strong>CO2 SAVED</strong> 432 lbs
+									</div>
+								</div>
+	  							
+	  							<div class="footer">
+	  								<a href="#" class="btn login_btn">SELECT</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">DISJOIN</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Dublin</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/dublin.jpg" alt="Image 1">
+	  							</div>
+
+								<div class="stats">
+									<div>
+										<strong>MEMBERS</strong> 2098
+									</div>
+									<div>
+										<strong>SWAPPED</strong> 362
+									</div>
+									<div>
+										<strong>CO2 SAVED</strong> 682 lbs
+									</div>
+								</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="btn login_btn">SELECT</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">Delete</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">San Ramon</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/san ramon.png" alt="Image 1">
+	  							</div>
+								<div class="stats">
+									<div>
+										<strong>MEMBERS</strong> 1098
+									</div>
+									<div>
+										<strong>SWAPPED</strong> 162
+									</div>
+									<div>
+										<strong>CO2 SAVED</strong> 182 lbs
+									</div>
+								</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="btn login_btn">SELECT</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">Delete</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<p class="ml-3">* Higher score is better - more CO2 saved</p>
+	  	</div>
+
+	  	<!-- Livermore School Affliation -->
+	  	<div id="livermoreschools" class="row mt-5 mb-2 d-none">
+	  		<div class="container mt-2">
+	  			<div class="row">
+	  				<div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Livermore High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/lhs.png" alt="Image 1">
+	  							</div>
+	  							<div class="dates">
+									<div class="col-md-8">
+										<strong>Swap Events</strong>
+										<p>01/28/2024 1:00pm to 2:00pm</p>
+									</div>
+									<div class="col-md-4">
+										<a href="#" class="btn login_btn" onclick="join()">Join</a>
+									</div>
+								</div>
+								<div class="stats">
+									<div>
+										<strong>MEMBERS</strong> 2111
+									</div>
+									<div>
+										<strong>SWAPPED</strong> 1162
+									</div>
+									<div>
+										<strong>CO2 SAVED</strong> 2182 lbs
+									</div>
+								</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Granada High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/ghs.png" alt="Image 1">
+	  							</div>
+	  							<div class="dates">
+									<div class="col-md-8">
+										<strong>Swap Events</strong>
+										<p>01/28/2024 1:00pm to 2:00pm</p>
+									</div>
+									<div class="col-md-4">
+										<a href="#" class="btn login_btn">Join</a>
+										<!--<a href="#" class="Cbtn Cbtn-danger">DISJOIN</a>-->
+									</div>
+								</div>
+								<div class="stats">
+									<div>
+										<strong>MEMBERS</strong> 1224
+									</div>
+									<div>
+										<strong>SWAPPED</strong> 832
+									</div>
+									<div>
+										<strong>CO2 SAVED</strong> 1182 lbs
+									</div>
+								</div>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<p class="ml-3">* Higher score is better - more CO2 saved</p>
+	  	</div>
+
+	  
+			  	<!-- Livermore School Affliation -->
+	  	<div id="livermoreschools1 d-none" class="row mt-5 mb-2 d-none">
+	  		<div class="container mt-5">
+	  			<div class="row">
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Livermore High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/lhs.png" alt="Image 1">
+	  							</div>
+
+	  							<div class="dates">
+	  								<div class="start">
+	  									<strong>STARTS</strong> 12:30 JAN 2015
+	  									<span></span>
+	  								</div>
+	  								<div class="ends">
+	  									<strong>ENDS</strong> 14:30 JAN 2015
+	  								</div>
+	  							</div>
+
+	  							<div class="stats">
+
+	  								<div>
+	  									<strong>MEMBERS</strong> 3098
+	  								</div>
+
+	  								<div>
+	  									<strong>SWAPPED</strong> 562
+	  								</div>
+
+	  								<div>
+	  									<strong>CO2 SAVED</strong> 1182 lbs
+	  								</div>
+
+	  							</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="Cbtn Cbtn-primary" onclick="join()">Join</a>
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Granada High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/ghs.png" alt="Image 1">
+	  							</div>
+
+	  							<div class="dates">
+	  								<div class="start">
+	  									<strong>STARTS</strong> 12:30 JAN 2015
+	  									<span></span>
+	  								</div>
+	  								<div class="ends">
+	  									<strong>ENDS</strong> 14:30 JAN 2015
+	  								</div>
+	  							</div>
+
+	  							<div class="stats">
+
+	  								<div>
+	  									<strong>MEMBERS</strong> 3098
+	  								</div>
+
+	  								<div>
+	  									<strong>SWAPPED</strong> 562
+	  								</div>
+
+	  								<div>
+	  									<strong>CO2 SAVED</strong> 1182 lbs
+	  								</div>
+
+	  							</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="Cbtn Cbtn-primary">Join</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">DISJOIN</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Amador Valley High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/avhs.png" alt="Image 1">
+	  							</div>
+
+	  							<div class="dates">
+	  								<div class="start">
+	  									<strong>STARTS</strong> 12:30 JAN 2015
+	  									<span></span>
+	  								</div>
+	  								<div class="ends">
+	  									<strong>ENDS</strong> 14:30 JAN 2015
+	  								</div>
+	  							</div>
+
+	  							<div class="stats">
+
+	  								<div>
+	  									<strong>MEMBERS</strong> 3098
+	  								</div>
+
+	  								<div>
+	  									<strong>SWAPPED</strong> 562
+	  								</div>
+
+	  								<div>
+	  									<strong>CO2 SAVED</strong> 1182 lbs
+	  								</div>
+
+	  							</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="Cbtn Cbtn-primary">Join</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">Delete</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+	  					<div class="tile">
+	  						<div class="wrapper">
+	  							<div class="header">Dougherty Valley High School</div>
+
+	  							<div class="banner-img">
+	  								<img src="./images/dvhs.jpg" alt="Image 1">
+	  							</div>
+
+	  							<div class="dates">
+	  								<div class="start">
+	  									<strong>STARTS</strong> 12:30 JAN 2015
+	  									<span></span>
+	  								</div>
+	  								<div class="ends">
+	  									<strong>ENDS</strong> 14:30 JAN 2015
+	  								</div>
+	  							</div>
+
+	  							<div class="stats">
+
+	  								<div>
+	  									<strong>MEMBERS</strong> 1082
+	  								</div>
+
+	  								<div>
+	  									<strong>SWAPPED</strong> 162
+	  								</div>
+
+	  								<div>
+	  									<strong>CO2 SAVED</strong> 600 lbs
+	  								</div>
+
+	  							</div>
+
+	  							<div class="footer">
+	  								<a href="#" class="Cbtn Cbtn-primary">Join</a>
+	  								<!--<a href="#" class="Cbtn Cbtn-danger">Delete</a>-->
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+	  		<p class="ml-3">* Higher score is better - more CO2 saved</p>
+	  	</div>
+
+
+		
+		<!-- CO2 Score Board End -->
+
+
+	  	<div id="monthlyscore" class="row mt-5 mb-2 d-none">
+
+	  		<div class="col-md-3 order-md-2 mb-1">
+	  			<h4 class="d-flex justify-content-between align-items-center mb-3">
+	  				<span class="text-muted">May 2023</span>
+	  			</h4>
+	  			<ul class="list-group mb-3">
+	  				<li class="list-group-item d-flex justify-content-between lh-condensed">
+	  					<div>
+	  						<h6 class="my-0">Recycle (lbs)</h6>
+	  						<small class="text-muted">Cans 89, Plastic 36, Glass 25, Paper 113 </small>
+	  					</div>
+	  					<span class="text-success" id="recycleresult">16.5 lbs</span>
+	  				</li>
+
+	  				<li class="list-group-item d-flex justify-content-between lh-condensed">
+	  					<div>
+	  						<h6 class="my-0">Regional Average</h6>
+	  						<small class="text-muted">In your region</small>
+	  					</div>
+	  					<span class="text-muted">122 lbs</span>
+	  				</li>
+	  				<li class="list-group-item d-flex justify-content-between">
+	  					<span>Difference</span>
+	  					<span class="text-primary" id="diff">-105.5 lbs</span>
+	  				</li>
+	  			</ul>
+
+	  		</div>
+	  		<div class="col-md-3 order-md-2 mb-1">
+	  			<h4 class="d-flex justify-content-between align-items-center mb-3">
+	  				<span class="text-muted">June 2023</span>
+	  			</h4>
+	  			<ul class="list-group mb-3">
+	  				<li class="list-group-item d-flex justify-content-between lh-condensed">
+	  					<div>
+	  						<h6 class="my-0">Recycle (lbs)</h6>
+	  						<small class="text-muted">Cans 89, Plastic 36, Glass 25, Paper 113 </small>
+	  					</div>
+	  					<span class="text-success" id="recycleresult">16.5 lbs</span>
+	  				</li>
+	  				<li class="list-group-item d-flex justify-content-between lh-condensed">
+	  					<div>
+	  						<h6 class="my-0">Regional Average</h6>
+	  						<small class="text-muted">In your region</small>
+	  					</div>
+	  					<span class="text-muted">-122 lbs</span>
+	  				</li>
+	  				<li class="list-group-item d-flex justify-content-between">
+	  					<span>Difference</span>
+	  					<span class="text-primary" id="diff">-105.5 lbs</span>
+	  				</li>
+	  			</ul>
+
+	  		</div>
+	  		<p class="ml-3">* Higher score is better - more CO2 saved</p>
+	  	</div>
+
+	  	<div id="errorMsg" class="col-12 col-md-6 alert-danger d-none">
+	  		Fail to start camera, please allow permision to access camera. <br />
+	  		If you are browsing through social media built in browsers, you would need to open the page in Sarafi (iPhone)/ Chrome (Android)
+	  		<button id="closeError" class="btn btn-primary ml-3">OK</button>
+	  	</div>
+	  	<div class="md-modal md-effect-12">
+	  		<div id="app-panel" class="app-panel md-content row p-0 m-0">
+	  			<div id="webcam-container" class="webcam-container col-12 d-none p-0 m-0">
+	  				<div id="message" class="col-12 col-md-6 alert-success">
+	  					Take a Pictue or Upload an image of all the items you want to recyle.<br />
+	  					We will calculate the CO2 in lbs saved from emission.
+	  				</div>
+	  				<label id="upload-image" style="position:relative;top:60vh;color:white" for="file-upload" class="custom-file-upload">
+	  					<i class="material-icons">camera_alt</i>
+	  				</label>
+	  				<input type="file" class="d-none" id="file-upload" style="position:relative;top:15vh;color:white" capture="camera" accept="image/*"
+						   onchange="loadFile(event)" />
+	  				<video id="webcam" autoplay playsinline width="640" height="480"></video>
+	  				<canvas id="canvas" class="d-none"></canvas>
+	  				<img src="" id="image-container-preview" class="d-none" />
+	  				<img src="" id="image-container" alt="AI result image" class="d-none" />
+	  				<div class="flash"></div>
+	  				<audio id="snapSound" src="audio/snap.wav" preload="auto"></audio>
+	  			</div>
+	  			<div id="cameraControls" class="cameraControls">
+	  				<div><button id="co2score" class="btn btn-success d-none">0 items recycled. You saved 0 lbs of CO2</button></div>
+	  				<!--<button id="take-photo" title="Take Photo" class="btn-link d-none"><i class="material-icons">camera_alt</i></button>-->
+	  				<button id="resume-camera" title="Resume Camera" class="btn-link d-none"><i class="material-icons">camera_front</i></button>
+	  				<button id="upload-photo" title="Upload Photo" class="btn-link d-none" onclick="handleAuthClick(false)"><i class="material-icons">file_upload</i></button>
+
+	  				<button id="sync-result" title="Sync Result" onclick="handleAuthClick(true)" class="btn-link d-none"><i class="material-icons">sync</i></button>
+	  				<button id="refresh" title="refresh" class="btn-link d-none" onclick="handleAuthClick(false)"><i class="material-icons">refresh</i></button>
+	  				<a href="#" id="download-photo" target="_blank" download="selfie.png" title="Save Photo" class="d-none"><i class="material-icons">file_download</i></a>
+	  				<!--<button id="close" title="Close App" class="btn-link d-none"><i class="material-icons">close</i></button>-->
+	  				<button id="exit-app" title="Exit App" class="btn-link d-none"><i class="material-icons">power_settings_new</i></button>
+
+	  			</div>
+	  			<div id="content" class="success message"><?php if(isset($message)) { echo $message; } ?></div>
+	  		</div>
+	  	</div>
+	  	<div class="md-overlay"></div>
+
+	<!--Leader Board-->
+	  	<div class="container mt-5 d-none" id="leaderboard">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="candidate-list">
+						<div class="candidate-list-box leadercard mt-4">
+							<div class="p-4 card-body">
+								<div class="align-items-center row">
+									<div class="col-auto">
+										<div class="candidate-list-images">
+											<a href="#"><img style="height: 100px" src="./images/leaderperson1.png" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+										</div>
+									</div>
+									<div class="col-lg-5">
+										<div class="candidate-list-content mt-3 mt-lg-0">
+											<h5 class="fs-19 mb-0">
+												<a class="primary-link" href="#">Darshini C Binduraj</a>
+												<span class="badge bg-success ms-1">
+												<i class="mdi mdi-star align-middle"></i>CO2 Score: 321 lbs</span>
+											</h5>
+											<p class="text-muted mb-2">Clothes Swapped: 650</p>
+											<ul class="list-inline mb-0 text-muted">
+												<li class="list-inline-item"><i class="mdi mdi-map-marker"></i>Livermore High School</li>
+												<li class="list-inline-item"><i class="mdi mdi-wallet"></i>Points: 321</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Current Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Past Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Score History</button>
+										</div>
+									</div>
+								</div>
+								<div class="favorite-icon">
+									<a href="#"><i class="mdi mdi-heart fs-18"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="candidate-list-box bookmark-post leadercard mt-4">
+							<div class="p-4 card-body">
+								<div class="align-items-center row">
+									<div class="col-auto">
+										<div class="candidate-list-images">
+											<a href="#"><img style="height: 100px" src="./images/leaderperson1.png" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+										</div>
+									</div>
+									<div class="col-lg-5">
+										<div class="candidate-list-content mt-3 mt-lg-0">
+											<h5 class="fs-19 mb-0">
+												<a class="primary-link" href="#">Lakshanya Palani</a>
+												<span class="badge bg-warning ms-1">
+													<i class="mdi mdi-star align-middle"></i>CO2 Score: 320</span>
+											</h5>
+											<p class="text-muted mb-2">Clothes Swapped: 640</p>
+											<ul class="list-inline mb-0 text-muted">
+												<li class="list-inline-item"><i class="mdi mdi-map-marker"></i>Foothill High School</li>
+												<li class="list-inline-item"><i class="mdi mdi-wallet"></i> Points: 640</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Current Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Past Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Score History</button>
+										</div>
+									</div>
+								</div>
+								<div class="favorite-icon">
+									<a href="#"><i class="mdi mdi-heart fs-18"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="candidate-list-box leadercard mt-4">
+							<div class="p-4 card-body">
+								<div class="align-items-center row">
+									<div class="col-auto">
+										<div class="candidate-list-images">
+											<a href="#"><img style="height: 100px" src="./images/leaderperson1.png" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+										</div>
+									</div>
+									<div class="col-lg-5">
+										<div class="candidate-list-content mt-3 mt-lg-0">
+											<h5 class="fs-19 mb-0">
+												<a class="primary-link" href="#">Pournami Prasanth </a>
+												<span class="badge bg-primary ms-1">
+													<i class="mdi mdi-star align-middle"></i>CO2 Score: 639</span>
+											</h5>
+											<p class="text-muted mb-2">Clothes Swapped: 630</p>
+											<ul class="list-inline mb-0 text-muted">
+												<li class="list-inline-item"><i class="mdi mdi-map-marker"></i> Livermore High School</li>
+												<li class="list-inline-item"><i class="mdi mdi-wallet"></i>Points: 630</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Current Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Past Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Score History</button>
+										</div>
+									</div>
+								</div>
+								<div class="favorite-icon">
+									<a href="#"><i class="mdi mdi-heart fs-18"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="candidate-list-box leadercard mt-4">
+							<div class="p-4 card-body">
+								<div class="align-items-center row">
+									<div class="col-auto">
+										<div class="candidate-list-images">
+											<a href="#"><img style="height: 100px" src="./images/leaderperson1.png" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+										</div>
+									</div>
+									<div class="col-lg-5">
+										<div class="candidate-list-content mt-3 mt-lg-0">
+											<h5 class="fs-19 mb-0">
+												<a class="primary-link" href="#">Niya Justine</a>
+												<span class="badge bg-success ms-1">
+													<i class="mdi mdi-star align-middle"></i>CO2 Score: 638</span>
+											</h5>
+											<p class="text-muted mb-2">Clothes Swapped: 638</p>
+											<ul class="list-inline mb-0 text-muted">
+												<li class="list-inline-item"><i class="mdi mdi-map-marker"></i>Sanjose High School</li>
+												<li class="list-inline-item"><i class="mdi mdi-wallet"></i> Points: 638</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Current Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Past Listing</button>
+											<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Score History</button>
+										</div>
+									</div>
+								</div>
+								<div class="favorite-icon">
+									<a href="#"><i class="mdi mdi-heart fs-18"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 mt-4">
+					<div class="card" style="width: 100%; height: 100%">
+						<div class="candidate-list-images text-center">
+							<a href="#"><img style="height: 100px" src="./images/leaderperson1.png" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title text-center">Niya Justine</h5>
+							<span class="badge bg-success ms-1">
+								<i class="mdi mdi-star align-middle"></i>CO2 Score: 600</span>
+							<p class="card-text">
+								
+							</p>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">Clothes Swapped: 620</li>
+								<li class="list-group-item">Sanjose High School</li>
+								<li class="list-group-item">Currently Listed: 20</li>
+							</ul>
+							<div class="text-center">
+								<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister" onclick="addclothes()">Current Listing</button>
+								<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Past Listing</button>
+								<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Score History</button>
+						
+							</div>
+				
+						</div>
+
+						<div class="card-body">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="mt-4 pt-2 col-lg-12">
+					<nav aria-label="Page navigation example">
+						<div class="pagination job-pagination mb-0 justify-content-center">
+							<li class="page-item active"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+
+		<div class="container mt-5 d-none" id="schoollist">
+			<h6 class="text-muted text-center">Livermore High School Cloth Swap Listing</h6> 
+			<div class="row mt-2 justify-content-center">
+			  <div class="col-6 col-sm-8 col-lg-5">
+				<ul class="list-group">
+				  <li class="list-group-item justify-content-center align-items-center text-center">
+					Soly Hux 2 Piece, Small, Good Condition ($9 or 200 pts)
+					<div class="image-parent text-center">
+						<img src="./images/cloth1.jpg" class="img-fluid" alt="quixote">
+					</div>
+					<div class="text-center">
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					</div>
+		
+				  </li>
+				  <li class="list-group-item justify-content-center align-items-center text-center">
+					City Triange Teen Dress Size 9, Good Condition ($8 or 180 pts)
+					<div class="image-parent text-center">
+						<img src="./images/cloth2.webp" class="img-fluid" alt="quixote">
+					</div>
+					<div class="text-center">
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					</div>
+		
+				  </li>
+				  <li class="list-group-item justify-content-center align-items-center text-center">
+					T-shirt, Size Medium, Good Condition ($7 or 160 pts)
+					<div class="image-parent text-center">
+						<img src="./images/cloth3.jpeg" class="img-fluid" alt="quixote">
+					</div>
+					<div class="text-center">
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>	
+					</div>
+		
+				  </li>
+				  <li class="list-group-item justify-content-center align-items-center text-center">
+					American Eagle 2 Piece,Small, Good Condition ($6 or 150 pts)
+					<div class="image-parent text-center">
+						<img src="./images/cloth4.jpeg" class="img-fluid" alt="quixote">
+					</div>
+					<div class="text-center">
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						<button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					</div>
+		
+				  </li>
+				</ul>
+			  </div>
+			  <div class="col-6 col-sm-8 col-lg-5">
+				<ul class="list-group">
+					<li class="list-group-item justify-content-center align-items-center text-center">
+					  Pink Skirt, Size Small, Good Condition ($10 or 300 pts)
+					  <div class="image-parent text-center">
+						  <img src="./images/cloth5.jpeg" class="img-fluid" alt="quixote">
+					  </div>
+					  <div class="text-center">
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					  </div>
+		  
+					</li>
+					<li class="list-group-item justify-content-center align-items-center text-center">
+					  Girls outer wear, small , Good Condition ($5 or 120 pts)
+					  <div class="image-parent text-center">
+						  <img src="./images/cloth6.jpeg" class="img-fluid" alt="quixote">
+					  </div>
+					  <div class="text-center">
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					  </div>
+		  
+					</li>
+					<li class="list-group-item justify-content-center align-items-center text-center">
+					  Justice Shirt, Size Medium, Good Condition ($12 or 400 pts)
+					  <div class="image-parent text-center">
+						  <img src="./images/cloth7.jpeg" class="img-fluid" alt="quixote">
+					  </div>
+					  <div class="text-center">
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					  </div>
+		  
+					</li>
+					<li class="list-group-item justify-content-center align-items-center text-center">
+					  American Eagle 2 Piece, Size Small, Good Condition
+					  <div class="image-parent text-center">
+						  <img src="./images/cloth4.jpeg" class="img-fluid" alt="quixote">
+					  </div>
+					  <div class="text-center">
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Reserve</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Interested</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">Information</button>
+						  <button class="btn btn-secondary btn-sm my-2 mr-2 mt-1" type="button" id="btnRegister">My Swap</button>
+					  </div>
+		  
+					</li>
+				  </ul>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="container mt-7 d-none" id="addclothes">
+			<div class="col-lg-12 col-md-12 ml-auto mr-auto">
+                <div class="table-responsive">
+                <table class="table table-shopping">
+                    <thead>
+                        <tr>
+                            <th class="text-center"></th>
+                            <th>Cloth</th>
+                            <th class="th-description">Color</th>
+                            <th class="th-description text-right">Size</th>
+                            <th class="text-center">Price/Points Required</th>
+                            <th class="text-right">Qty</th>
+                            <th class="text-right">Earn CO2 Points</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="img-container">
+                                    <img src="./images/usercloth1.webp" alt="...">
+                                </div>
+                            </td>
+                            <td class="td-name">
+                                <a>Spring Jacket</a>
+                                <br><small>by Dolce&Gabbana</small>
+                            </td>
+                            <td>
+                                Black
+                            </td>
+                            <td class="text-center">
+                                M
+                            </td>
+                            <td class="td-number text-center">
+                                <small>$</small>25 or 500 points
+                            </td>
+                            <td class="td-number">
+                                1
+                            </td>
+                            <td class="td-number text-center">
+                                <small></small>549
+                            </td>
+                            <td class="td-actions">
+                                <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-link" data-original-title="Remove item">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                             <td>
+                                <div class="img-container">
+                                    <img src="./images/usercloth2.jpg" alt="...">
+                                </div>
+                            </td>
+                            <td class="td-name">
+                                <a>Short Pants</a>
+                                <br><small>by Gucci</small>
+                            </td>
+                            <td>
+                                Purple
+                            </td>
+                            <td class="text-center">
+                                M
+                            </td>
+    
+                            <td class="td-number text-center">
+                                <small>$</small>39 or 600 points
+                            </td>
+                            <td class="td-number">
+                                2
+                            </td>
+                            <td class="td-number text-center">
+                                <small></small>998
+                            </td>
+                            <td class="td-actions">
+                                <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-link" data-original-title="Remove item">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="img-container">
+                                    <img src="./images/usercloth2.jpg" alt="...">
+                                </div>
+                            </td>
+                            <td class="td-name">
+                                <a>Pencil Skirt</a>
+                                <br><small>by Valentino</small>
+                            </td>
+                            <td>
+                                White
+                            </td>
+                            <td class="text-center">
+                                XL
+                            </td>
+    
+                            <td class="td-number text-center">
+                                <small>$</small>49 or 700 points
+                            </td>
+                            <td class="td-number">
+                                1
+                            </td>
+                            <td class="td-number text-center">
+                                <small></small>799</td>
+                            <td class="td-actions">
+                                <button type="button" rel="tooltip" data-placement="left" title="" class="btn btn-link" data-original-title="Remove item">
+                                    <i class="material-icons">close</i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="8" class="text-right"> 
+								<button type="button" class="btn btnaddcloth btn-round" onClick="addUserClothes()">Add Clothes
+
+								</button>
+							</td>
+    
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+    
+            </div>
+		  </div>
+
+		  <!-- Impact Modal Start -->
+<div id="addClothModal" class="modal mt-2 center">
+	<!-- Modal content -->
+	<div class="modal-content">
+	  <button class="close text-right" onClick="closeModal()">&times;</button>
+	  <div class="container card-0 justify-content-center ">
+        <div class="card-body px-sm-4 px-0">
+            <div class="row justify-content-center round">
+                <div class="col-lg-12 col-md-12 ">
+                    <div class="card shadow-lg card-1">
+                        <div class="card-body inner-card">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-5 col-md-6 col-sm-12">
+                                    <div class="form-group"><label for="first-name">Description</label><input type="text" class="form-control" id="first-name" placeholder="Description"> </div>
+                                    <div class="form-group"> <label for="inputEmail4">Type</label> <select class="form-control"><option>Jeans</option><option>Shorts</option> <option>Skirt</option></select> </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 col-sm-12">
+                                    <div class="form-group"> <label for="last-name">Brand</label> <input type="text" class="form-control" id="last-name" placeholder=""> </div>
+                                    <div class="form-group"> <label for="phone">Size</label>  <input type="email" class="form-control" id="email" placeholder=""> </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-10 col-12"> <div class="form-group files"><label class="my-auto">Take a Picture or Upload an image </label> <input id="file" type="file" class="form-control" /></div></div>
+                            	<div id="errorMsg" class="col-12 col-md-6 alert-danger d-none">
+									Fail to start camera, please allow permision to access camera. <br />
+									If you are browsing through social media built in browsers, you would need to open the page in Sarafi (iPhone)/ Chrome (Android)
+									<button id="closeError" class="btn btn-primary ml-3">OK</button>
+								</div>
+								<div class="md-modal md-effect-12">
+									<div id="app-panel" class="app-panel md-content row p-0 m-0">
+										<div id="webcam-container" class="webcam-container col-12 p-0 m-0">
+											<div id="message" class="col-12 col-md-6 alert-success">
+												Take a Pictue or Upload an image<br />
+												We will calculate the CO2 in lbs saved from emission.
+											</div>
+											<label id="upload-image" style="position:relative;top:60vh;color:white" for="file-upload" class="custom-file-upload">
+												<i class="material-icons">camera_alt</i>
+											</label>
+											<input type="file" class="d-none" id="file-upload" style="position:relative;top:15vh;color:white" capture="camera" accept="image/*"
+												 onchange="loadFile(event)" />
+											<video id="webcam" autoplay playsinline width="640" height="480"></video>
+											<canvas id="canvas" class="d-none"></canvas>
+											<img src="" id="image-container-preview" class="d-none" />
+											<img src="" id="image-container" alt="AI result image" class="d-none" />
+											<div class="flash"></div>
+											<audio id="snapSound" src="audio/snap.wav" preload="auto"></audio>
+										</div>
+										<div id="cameraControls" class="cameraControls">
+											<div><button id="co2score" class="btn btn-success d-none">0 items recycled. You saved 0 lbs of CO2</button></div>
+											<!--<button id="take-photo" title="Take Photo" class="btn-link d-none"><i class="material-icons">camera_alt</i></button>-->
+											<button id="resume-camera" title="Resume Camera" class="btn-link d-none"><i class="material-icons">camera_front</i></button>
+											<button id="upload-photo" title="Upload Photo" class="btn-link d-none" onclick="handleAuthClick(false)"><i class="material-icons">file_upload</i></button>
+					  
+											<button id="sync-result" title="Sync Result" onclick="handleAuthClick(true)" class="btn-link d-none"><i class="material-icons">sync</i></button>
+											<button id="refresh" title="refresh" class="btn-link d-none" onclick="handleAuthClick(false)"><i class="material-icons">refresh</i></button>
+											<a href="#" id="download-photo" target="_blank" download="selfie.png" title="Save Photo" class="d-none"><i class="material-icons">file_download</i></a>
+											<!--<button id="close" title="Close App" class="btn-link d-none"><i class="material-icons">close</i></button>-->
+											<button id="exit-app" title="Exit App" class="btn-link d-none"><i class="material-icons">power_settings_new</i></button>
+					  
+										</div>
+										<div id="content" class="success message"><?php if(isset($message)) { echo $message; } ?></div>
+									</div>
+								</div>
+							</div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-12 col-lg-10 col-12">
+                                    <div class="row justify-content-end mb-5">
+										<div class="col-lg-6">
+											CO2 Saved 102 lbs
+										</div>
+                                        <div class="col-lg-6 col-auto "><button type="button" class="btn login_btn btn-block"><small class="font-weight-bold">Add</small></button> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+		</div>
+	</div>
+  
+  </div>
+  <!-- Impact Modal End -->
+	  </main>
+    <script src='./js/app.js'></script>
+    <script type="text/javascript" src="./js/gapi-upload.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+        onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client"
+        onload="gisLoaded()"></script>
+
+</body>
+</html>
